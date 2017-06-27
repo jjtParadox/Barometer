@@ -1,8 +1,8 @@
-#Barometer
+# Barometer
 
 An experimental test suite for MinecraftForge mods. Runs with MC 1.10.2 and requires ForgeGradle.
 
-##Usage
+## Usage
 
 Download the latest release from the GitHub releases page and put it into your project's `./libs` folder.
 
@@ -37,7 +37,7 @@ Create JUnit tests as usual, except prepend each class with the annotation `@Run
 
 Run all tests with `gradle test`.
 
-##Notes:
+## Notes:
 - All tests are server side ONLY.
 - Remember to agree to `eula.txt` in your test's run dir.
 - Use `TestUtils.tickServer();` to tick the server while in tests.
