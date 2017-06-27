@@ -1,0 +1,16 @@
+[
+{
+  "modid": "barometer",
+  "name": "Barometer for Forge",
+  "description": "My attempt at making a test suite for MinecraftForge.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["jjtParadox"],
+  "credits": "The Forge and FML guys, for making this <snip>",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
