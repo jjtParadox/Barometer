@@ -47,7 +47,7 @@ val LOGGER: Logger = LogManager.getLogger(Barometer.MOD_ID)
 class Barometer {
     companion object {
         const val MOD_ID = "barometer"
-        const val VERSION = "0.1"
+        const val VERSION = "0.0.1"
 
         @JvmField val futureTaskQueue: Queue<FutureTask<*>> = Queues.newArrayDeque<FutureTask<*>>()
         @JvmField var testing = true
