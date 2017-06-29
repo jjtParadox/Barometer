@@ -47,7 +47,7 @@ val LOGGER: Logger = LogManager.getLogger(Barometer.MOD_ID)
 class Barometer {
     companion object {
         const val MOD_ID = "barometer"
-        const val VERSION = "0.0.2"
+        const val VERSION = "0.0.2-1.12"
 
         @JvmField val futureTaskQueue: Queue<FutureTask<*>> = Queues.newArrayDeque<FutureTask<*>>()
         @JvmField var testing = true
@@ -114,7 +114,7 @@ class Barometer {
 
     // Clear all worlds and shut down the server
     private fun endTesting() {
-        server.worldServers = null
+        server.worlds = null
         server.initiateShutdown()
     }
 

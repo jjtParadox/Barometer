@@ -59,14 +59,14 @@ public class BarometerExampleTestJava {
         world.setBlockState(upperChestPos, Blocks.CHEST.getDefaultState());
         TileEntityChest chest = (TileEntityChest) world.getTileEntity(upperChestPos);
         ItemStack item = new ItemStack(Blocks.STONE);
-        chest.setInventorySlotContents(0, item);
+        chest.setInventorySlotContents(0, item.copy());
 
         world.setBlockState(hopperPos, Blocks.HOPPER.getDefaultState());
         TileEntityHopper hopper = (TileEntityHopper) world.getTileEntity(hopperPos);
 
         for (int i = 0; i < 200; i++) {
             TestUtils.tickServer();
-            if (hopper.getStackInSlot(0) != null) {
+            if (!hopper.getStackInSlot(0).isEmpty()) {
                 break;
             }
         }
