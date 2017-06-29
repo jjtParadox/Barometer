@@ -18,34 +18,9 @@
  */
 package com.jjtparadox.barometer
 
-import com.jjtparadox.barometer.experimental.env.TestWorldSaveHandler
-import com.jjtparadox.barometer.experimental.env.TestWorldServer
-import net.minecraft.world.DimensionType
-import net.minecraft.world.GameType
-import net.minecraft.world.WorldSettings
-import net.minecraft.world.WorldType
-import net.minecraft.world.storage.WorldInfo
-import net.minecraftforge.common.DimensionManager
-import net.minecraftforge.fml.server.FMLServerHandler
-
 object TestUtils {
     @JvmStatic fun tickServer() {
         //TODO tick the server in a way that doesn't autosave unless requested
         Barometer.server.tick()
-    }
-
-    @JvmStatic fun createEmptyWorld(name: String): TestWorldServer {
-        TODO("Not fully implemented!")
-
-        val settings = WorldSettings(0, GameType.SURVIVAL, false, false, WorldType.FLAT)
-        val info = WorldInfo(settings, name)
-        val handler = TestWorldSaveHandler(info)
-
-        try {
-            DimensionManager.unregisterDimension(0)
-        } catch (e: Exception) {
-        }
-        DimensionManager.registerDimension(0, DimensionType.valueOf("BarometerWorld"))
-        return TestWorldServer(FMLServerHandler.instance().server, handler, info, 0)
     }
 }
