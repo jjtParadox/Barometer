@@ -117,7 +117,22 @@ class TestTweaker : FMLServerTweaker() {
     override fun injectIntoClassLoader(classLoader: LaunchClassLoader) {
         classLoader.addTransformerExclusion("com.jjtparadox.barometer.experimental.env.")
 
+        classLoader.addClassLoaderExclusion("junit.")
         classLoader.addClassLoaderExclusion("org.junit.")
+        classLoader.addClassLoaderExclusion("org.hamcrest.")
+
+        classLoader.addClassLoaderExclusion("org.mockito.")
+        classLoader.addClassLoaderExclusion("net.bytebuddy.")
+        classLoader.addClassLoaderExclusion("org.objenesis.")
+
+        classLoader.addClassLoaderExclusion("org.easymock.")
+        classLoader.addClassLoaderExclusion("cglib.")
+        classLoader.addClassLoaderExclusion("org.testng.")
+
+        classLoader.addClassLoaderExclusion("org.powermock.")
+        classLoader.addClassLoaderExclusion("org.javassist.")
+        classLoader.addClassLoaderExclusion("com.thoughtworks.xstream")
+
         super.injectIntoClassLoader(classLoader)
     }
 }
