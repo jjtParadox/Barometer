@@ -74,7 +74,7 @@ class BarometerExampleTest {
         for (i in 0..2399) {
             TestUtils.tickServer()
             cookTime = furnaceData.getInteger("CookTime")
-            if (cookTime > 0 && furnace.getStackInSlot(2) != null) {
+            if (cookTime > 0 && !furnace.getStackInSlot(2).isEmpty) {
                 break
             }
         }
