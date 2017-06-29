@@ -72,7 +72,7 @@ class BarometerExampleTest {
         furnace.setInventorySlotContents(0, ore)
         furnace.setInventorySlotContents(1, coal)
         for (i in 0..2399) {
-            Barometer.server.tick()
+            TestUtils.tickServer()
             cookTime = furnaceData.getInteger("CookTime")
             if (cookTime > 0 && furnace.getStackInSlot(2) != null) {
                 break
