@@ -53,7 +53,7 @@ class Barometer {
         @JvmField var testing = true
         @JvmField var finishedLatch = CountDownLatch(1)
 
-        val server by lazy { theServer } // Hack to create a lateinit val
+        @JvmStatic val server by lazy { theServer } // Hack to create a lateinit val
         private lateinit var theServer: DedicatedServer
     }
 
