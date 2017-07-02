@@ -24,7 +24,7 @@ public class BarometerExampleTestJava {
 
     @Before
     public void setUp() {
-        world = Barometer.Companion.getServer().getEntityWorld();
+        world = Barometer.getServer().getEntityWorld();
     }
 
     @Test
