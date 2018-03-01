@@ -69,6 +69,8 @@ test {
     systemProperty 'barometer.numClasses', 2
 
     workingDir = { minecraft.runDir + "/test" }
+
+    mkdir workingDir
 }
 
 processResources {
