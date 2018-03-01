@@ -71,6 +71,8 @@ test {
     workingDir = { minecraft.runDir + "/test" }
 
     mkdir workingDir
+
+    file("$workingDir/eula.txt").text = "eula=true"
 }
 
 processResources {
