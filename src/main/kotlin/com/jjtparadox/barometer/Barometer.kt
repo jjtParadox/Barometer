@@ -79,6 +79,7 @@ class Barometer {
         serverSettings.setProperty("generate-structures", false)
         serverSettings.setProperty("gamemode", 0)
         serverSettings.setProperty("level-type", "FLAT")
+        serverSettings.setProperty("generator-settings", "3;minecraft:bedrock,3*minecraft:stone,52*minecraft:sandstone;2;")
         serverSettings.setProperty("max-tick-time", 0)
         serverSettings.saveProperties()
 
