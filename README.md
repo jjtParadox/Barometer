@@ -26,10 +26,15 @@ test {
     systemProperty 'barometer.numClasses', 1
     
     workingDir = {minecraft.runDir + "/test"} // This can be set to whatever you prefer
+    
+    mkdir workingDir // Make sure the directory exists.
+    
+    // NOTE: By using the following statement in your code you are indicating your agreement to the Minecraft EULA (https://account.mojang.com/documents/minecraft_eula).
+    file("$workingDir/eula.txt").text = "eula=true" // Automatically agree to the eula
 }
 ```
 
-Make sure the directory `./run/test` (or equivalent) exists.
+Make sure the directory `./run/test` (or equivalent) exists.  The gradle test task above will do that 'as is'.
 
 Create the directories `./src/test/java/YourModPackage` for test classes.
 
