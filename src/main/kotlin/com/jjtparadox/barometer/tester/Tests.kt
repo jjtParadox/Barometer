@@ -55,7 +55,7 @@ class BarometerTester(klass: Class<*>) : BlockJUnit4ClassRunner(load(klass)) {
                 val thread = Thread.currentThread()
                 val contextClassLoader = thread.contextClassLoader
 
-                GradleStartTestServer().launch(arrayOf("--noCoreSearch"))
+                GradleStartTestServer().launch(arrayOf("--noCoreSearch", "nogui"))
 
                 thread.contextClassLoader = contextClassLoader
 
