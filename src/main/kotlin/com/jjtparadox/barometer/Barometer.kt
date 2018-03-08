@@ -65,21 +65,22 @@ class Barometer {
             throw IllegalStateException("The Barometer mod should only be used in a deobsfucated test environment!")
         }
 
-        //TODO Allow all this stuff to be configured from build.gradle (or some better place?)
         theServer = FMLCommonHandler.instance().minecraftServerInstance as DedicatedServer
         val serverSettings = PropertyManager(File("server.properties"))
 
-        serverSettings.setProperty("online-mode", false)
-        serverSettings.setProperty("server-ip", "127.0.0.1")
-        serverSettings.setProperty("spawn-animals", false)
-        serverSettings.setProperty("spawn-npcs", false)
-        serverSettings.setProperty("motd", "Barometer Test Server")
-        serverSettings.setProperty("force-gamemode", true)
-        serverSettings.setProperty("difficulty", 0)
-        serverSettings.setProperty("generate-structures", false)
-        serverSettings.setProperty("gamemode", 0)
-        serverSettings.setProperty("level-type", "FLAT")
-        serverSettings.setProperty("max-tick-time", 0)
+        // Use safeSet so as to preserve any existing server.properties file
+        safeSet(serverSettings, "online-mode", false)
+        safeSet(serverSettings,"server-ip", "127.0.0.1")
+        safeSet(serverSettings,"spawn-animals", false)
+        safeSet(serverSettings,"spawn-npcs", false)
+        safeSet(serverSettings,"motd", "Barometer Test Server")
+        safeSet(serverSettings,"force-gamemode", true)
+        safeSet(serverSettings,"difficulty", 0)
+        safeSet(serverSettings,"generate-structures", false)
+        safeSet(serverSettings,"gamemode", 0)
+        safeSet(serverSettings,"level-type", "FLAT")
+        safeSet(serverSettings,"generator-settings", "3;minecraft:air;127;")
+        safeSet(serverSettings,"max-tick-time", 0)
         serverSettings.saveProperties()
 
         server.serverOwner = "barometer_test_player"
@@ -87,11 +88,10 @@ class Barometer {
         MinecraftForge.EVENT_BUS.register(this)
     }
 
-//TODO Make a nice empty world for tests
-//    @Mod.EventHandler
-//    fun init(event: FMLInitializationEvent) {
-//        TestWorldType()
-//    }
+    private fun safeSet(settings: PropertyManager, key: String, value: Any) {
+        if ( !settings.hasProperty(key) )
+            settings.setProperty(key, value)
+    }
 
     @Mod.EventHandler
     fun serverAboutToStart(event: FMLServerAboutToStartEvent) {
