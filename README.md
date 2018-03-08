@@ -1,6 +1,6 @@
 # Barometer
 
-An experimental test suite for MinecraftForge mods. Runs with MC 1.10.2 and requires ForgeGradle.
+An experimental test suite for MinecraftForge mods. Runs with MC 1.12 and requires ForgeGradle.
 
 ## Usage
 
