@@ -88,7 +88,7 @@ class Barometer {
         MinecraftForge.EVENT_BUS.register(this)
     }
 
-    private fun safeSet(settings: PropertyManager, key: String, value: Any){
+    private fun safeSet(settings: PropertyManager, key: String, value: Any) {
         if ( !settings.hasProperty(key) )
             settings.setProperty(key, value)
     }
