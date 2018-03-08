@@ -79,7 +79,7 @@ class Barometer {
         safeSet(serverSettings,"generate-structures", false)
         safeSet(serverSettings,"gamemode", 0)
         safeSet(serverSettings,"level-type", "FLAT")
-        safeSet(serverSettings,"generator-settings", "3;minecraft:bedrock,3*minecraft:stone,52*minecraft:sandstone;2;")
+        safeSet(serverSettings,"generator-settings", "3;minecraft:air;127;")
         safeSet(serverSettings,"max-tick-time", 0)
         serverSettings.saveProperties()
 
