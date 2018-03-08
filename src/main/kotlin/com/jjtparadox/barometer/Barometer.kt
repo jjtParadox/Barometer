@@ -65,10 +65,10 @@ class Barometer {
             throw IllegalStateException("The Barometer mod should only be used in a deobsfucated test environment!")
         }
 
-        //TODO Allow all this stuff to be configured from build.gradle (or some better place?)
         theServer = FMLCommonHandler.instance().minecraftServerInstance as DedicatedServer
         val serverSettings = PropertyManager(File("server.properties"))
 
+        // Use safeSet so as to preserve any existing server.properties file
         safeSet(serverSettings, "online-mode", false)
         safeSet(serverSettings,"server-ip", "127.0.0.1")
         safeSet(serverSettings,"spawn-animals", false)
@@ -92,12 +92,6 @@ class Barometer {
         if ( !settings.hasProperty(key) )
             settings.setProperty(key, value)
     }
-
-//TODO Make a nice empty world for tests
-//    @Mod.EventHandler
-//    fun init(event: FMLInitializationEvent) {
-//        TestWorldType()
-//    }
 
     @Mod.EventHandler
     fun serverAboutToStart(event: FMLServerAboutToStartEvent) {
