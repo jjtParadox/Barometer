@@ -21,9 +21,11 @@ package com.jjtparadox.barometer.tester
 import GradleStartServer
 import com.google.common.util.concurrent.ListenableFutureTask
 import com.jjtparadox.barometer.Barometer
+import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner
 import net.minecraft.launchwrapper.Launch
 import net.minecraft.launchwrapper.LaunchClassLoader
 import net.minecraftforge.fml.common.launcher.FMLServerTweaker
+import org.junit.runner.RunWith
 import org.junit.runner.notification.RunNotifier
 import org.junit.runners.BlockJUnit4ClassRunner
 import org.junit.runners.model.FrameworkMethod
@@ -77,8 +79,17 @@ class BarometerTester(klass: Class<*>) : BlockJUnit4ClassRunner(load(klass)) {
         super.run(notifier)
         if (testCount == -1) {
             try {
-                val getTestCount = barometer.getMethod("getTestCount")
-                testCount = (getTestCount.invoke(null) as Number).toInt()
+                // Use FastClasspathScanner to find the number of Barometer tests being run
+                testCount = 0
+                // Only scan directories for .class files
+                val scanner = FastClasspathScanner("-jar:")
+                scanner.matchClassesWithAnnotation(RunWith::class.java, {
+                    val value = it.getAnnotation(RunWith::class.java).value
+                    if (value == BarometerTester::class)
+                        testCount++
+                }
+                )
+                scanner.scan()
             } catch (e: Exception) {
                 System.err.println("Could not get testCount:")
                 e.printStackTrace(System.err)
