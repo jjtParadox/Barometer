@@ -36,7 +36,7 @@ class BarometerTester(klass: Class<*>) : BlockJUnit4ClassRunner(load(klass)) {
     @Suppress("UNCHECKED_CAST")
     companion object {
         var started = false
-        var testCount = 1
+        var testCount = -1
 
         // References to Barometer's mod class & fields
         lateinit var barometer: Class<*>
@@ -59,11 +59,6 @@ class BarometerTester(klass: Class<*>) : BlockJUnit4ClassRunner(load(klass)) {
 
                 thread.contextClassLoader = contextClassLoader
 
-                try {
-                    testCount = System.getProperty("barometer.numClasses").toInt()
-                } catch (e: Exception) {
-                }
-
                 barometer = Class.forName(Barometer::class.qualifiedName, true, Launch.classLoader)
                 taskQueue = barometer.getField("futureTaskQueue")[null] as Queue<FutureTask<*>>
                 finishedLatch = barometer.getField("finishedLatch")[null] as CountDownLatch
@@ -80,8 +75,17 @@ class BarometerTester(klass: Class<*>) : BlockJUnit4ClassRunner(load(klass)) {
 
     override fun run(notifier: RunNotifier?) {
         super.run(notifier)
+        if ( testCount == -1 ){
+            try {
+                val getTestCount = barometer.getMethod("getTestCount")
+                testCount = (getTestCount.invoke(null) as Number).toInt()
+            } catch (e: Exception){
+                System.err.println("Could not get testCount:")
+                e.printStackTrace(System.err)
+            }
+        }
         testCount--
-        if (testCount == 0) {
+        if (testCount <= 0) {
             barometer.getField("testing").setBoolean(null, false)
             finishedLatch.await()
         }
