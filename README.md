@@ -15,16 +15,15 @@ dependencies {
     testCompile "org.jetbrains.kotlin:kotlin-reflect:1.1.2-5"
     testCompile "junit:junit:4.12"
     testCompile makeStart.outputs.files
+    
+    testRuntime "io.github.lukehutch:fast-classpath-scanner:2.18.1"
 }
 ```
 
 Add the following to the end of `build.gradle`:
 
 ```gradle
-test {
-    // Number of test classes that are run before the server is closed (if this value is wrong things will break!)
-    systemProperty 'barometer.numClasses', 1
-    
+test {    
     workingDir = {minecraft.runDir + "/test"} // This can be set to whatever you prefer
     
     mkdir workingDir // Make sure the directory exists.
@@ -46,5 +45,4 @@ Run all tests with `gradle test`.
 - All tests are server side ONLY.
 - Remember to agree to `eula.txt` in your test's run dir.  If you use the gradle test task above, this will be done for you.
 - Use `TestUtils.tickServer();` to tick the server while in tests.
-- Always update the `barometer.numClasses` property in `build.gradle` every time you create or remove a test class.
 - This is very alpha and will probably collapse into a black hole if you sneeze on it. Please report bugs and submit PRs to GitHub!
