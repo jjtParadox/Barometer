@@ -75,11 +75,11 @@ class BarometerTester(klass: Class<*>) : BlockJUnit4ClassRunner(load(klass)) {
 
     override fun run(notifier: RunNotifier?) {
         super.run(notifier)
-        if ( testCount == -1 ){
+        if (testCount == -1) {
             try {
                 val getTestCount = barometer.getMethod("getTestCount")
                 testCount = (getTestCount.invoke(null) as Number).toInt()
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 System.err.println("Could not get testCount:")
                 e.printStackTrace(System.err)
             }
@@ -113,10 +113,6 @@ class GradleStartTestServer : GradleStartServer() {
 }
 
 class TestTweaker : FMLServerTweaker() {
-    override fun getLaunchTarget(): String? {
-        return super.getLaunchTarget()
-//        return TestEnvServer::class.qualifiedName
-    }
 
     override fun injectIntoClassLoader(classLoader: LaunchClassLoader) {
         classLoader.addTransformerExclusion("com.jjtparadox.barometer.experimental.env.")

@@ -62,7 +62,7 @@ class Barometer {
         // Use reflection to find the number of Barometer tests being run
         @JvmStatic
         fun getTestCount(): Int {
-            var numTests = 0;
+            var numTests = 0
             // Only scan directories for .class files
             var scanner = FastClasspathScanner("-jar:")
             scanner.matchClassesWithAnnotation(RunWith::class.java,
@@ -89,17 +89,17 @@ class Barometer {
 
         // Use safeSet so as to preserve any existing server.properties file
         safeSet(serverSettings, "online-mode", false)
-        safeSet(serverSettings,"server-ip", "127.0.0.1")
-        safeSet(serverSettings,"spawn-animals", false)
-        safeSet(serverSettings,"spawn-npcs", false)
-        safeSet(serverSettings,"motd", "Barometer Test Server")
-        safeSet(serverSettings,"force-gamemode", true)
-        safeSet(serverSettings,"difficulty", 0)
-        safeSet(serverSettings,"generate-structures", false)
-        safeSet(serverSettings,"gamemode", 0)
-        safeSet(serverSettings,"level-type", "FLAT")
-        safeSet(serverSettings,"generator-settings", "3;minecraft:air;127;")
-        safeSet(serverSettings,"max-tick-time", 0)
+        safeSet(serverSettings, "server-ip", "127.0.0.1")
+        safeSet(serverSettings, "spawn-animals", false)
+        safeSet(serverSettings, "spawn-npcs", false)
+        safeSet(serverSettings, "motd", "Barometer Test Server")
+        safeSet(serverSettings, "force-gamemode", true)
+        safeSet(serverSettings, "difficulty", 0)
+        safeSet(serverSettings, "generate-structures", false)
+        safeSet(serverSettings, "gamemode", 0)
+        safeSet(serverSettings, "level-type", "FLAT")
+        safeSet(serverSettings, "generator-settings", "3;minecraft:air;127;")
+        safeSet(serverSettings, "max-tick-time", 0)
         serverSettings.saveProperties()
 
         server.serverOwner = "barometer_test_player"
