@@ -11,11 +11,11 @@ Add the following to your `build.gradle`'s dependency section:
 ```gradle
 dependencies {
     // ...
-    testCompile "org.jetbrains.kotlin:kotlin-stdlib:1.1.2-5"
-    testCompile "org.jetbrains.kotlin:kotlin-reflect:1.1.2-5"
     testCompile "junit:junit:4.12"
     testCompile makeStart.outputs.files
     
+    testRuntime "org.jetbrains.kotlin:kotlin-stdlib:1.1.2-5"
+    testRuntime "org.jetbrains.kotlin:kotlin-reflect:1.1.2-5"
     testRuntime "io.github.lukehutch:fast-classpath-scanner:2.18.1"
 }
 ```
