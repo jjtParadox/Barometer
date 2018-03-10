@@ -1,7 +1,7 @@
 /*
  * This file is part of Barometer
  *
- * Copyright (c) 2017 jjtParadox
+ * Copyright (c) 2018 jjtParadox
  *
  * Barometer is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as

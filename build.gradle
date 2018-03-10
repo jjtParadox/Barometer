@@ -99,7 +99,7 @@ license {
     ext {
         name = project.name
         organization = 'jjtParadox'
-        year = '2017'
+        year = '2018'
     }
 
     sourceSets = [project.sourceSets.main] as Collection<SourceSet>
