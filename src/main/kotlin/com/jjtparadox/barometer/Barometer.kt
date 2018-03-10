@@ -19,6 +19,8 @@
 package com.jjtparadox.barometer
 
 import com.google.common.collect.Queues
+import com.jjtparadox.barometer.tester.BarometerTester
+import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner
 import net.minecraft.launchwrapper.Launch
 import net.minecraft.server.dedicated.DedicatedServer
 import net.minecraft.server.dedicated.PropertyManager
@@ -36,6 +38,7 @@ import net.minecraftforge.fml.common.event.FMLServerStoppedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import org.junit.runner.RunWith
 import java.io.File
 import java.util.Queue
 import java.util.concurrent.CountDownLatch
@@ -55,6 +58,22 @@ class Barometer {
 
         @JvmStatic val server by lazy { theServer } // Hack to create a lateinit val
         private lateinit var theServer: DedicatedServer
+
+        // Use reflection to find the number of Barometer tests being run
+        @JvmStatic
+        fun getTestCount(): Int {
+            var numTests = 0;
+            // Only scan directories for .class files
+            var scanner = FastClasspathScanner("-jar:")
+            scanner.matchClassesWithAnnotation(RunWith::class.java,
+                    { c -> run {
+                        val value = c.getAnnotation(RunWith::class.java).value
+                        if ( value == BarometerTester::class )
+                            numTests++
+                    } })
+            scanner.scan()
+            return numTests
+        }
     }
 
     @Mod.EventHandler
