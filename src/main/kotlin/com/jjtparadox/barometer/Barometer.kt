@@ -43,7 +43,8 @@ import java.util.concurrent.FutureTask
 
 val LOGGER: Logger = LogManager.getLogger(Barometer.MOD_ID)
 
-@Mod(modid = Barometer.MOD_ID, version = Barometer.VERSION, serverSideOnly = true)
+@Mod(modid = Barometer.MOD_ID, version = Barometer.VERSION, serverSideOnly = true,
+        acceptableRemoteVersions = "*")
 class Barometer {
     companion object {
         const val MOD_ID = "barometer"
