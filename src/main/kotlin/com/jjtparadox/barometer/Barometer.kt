@@ -102,6 +102,10 @@ class Barometer {
 
     @Mod.EventHandler
     fun serverStarted(event: FMLServerStartedEvent) {
+        // Switch off auto-save
+        val commandManager = server.getCommandManager()
+        commandManager.executeCommand(server, "save-off")
+
         while (testing) {
             synchronized(futureTaskQueue) {
                 futureTaskQueue.forEach { it.run() }
