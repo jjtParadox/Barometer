@@ -13,10 +13,13 @@ buildscript {
 plugins {
     id 'net.minecrell.licenser' version '0.3'
     id "com.diffplug.gradle.spotless" version "3.4.0"
+    id "com.jfrog.bintray" version "1.7.3"
 }
 
 apply plugin: 'kotlin'
 apply plugin: 'net.minecraftforge.gradle.forge'
+
+apply plugin: 'maven-publish'
 
 version = "0.0.3-1.12"
 group = "com.jjtparadox.barometer"
@@ -120,3 +123,36 @@ spotless {
         endWithNewline()
     }
 }
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+
+            artifact sourceJar {
+                classifier "sources"
+            }
+        }
+    }
+}
+
+bintray {
+    // User and key from global gradle.properties
+    if (project.hasProperty('bintray.user')) {
+        user = project.property('bintray.user')
+        key = project.property('bintray.key')
+    }
+    pkg {
+        repo = 'MC'
+        name = project.name
+        licenses = ['LGPL-3.0']
+        vcsUrl = 'https://github.com/jjtParadox/Barometer.git'
+        version {
+            name = "v${project.version}"
+            vcsTag = name
+        }
+    }
+    publications = ['maven']
+}
+
+bintrayUpload.dependsOn check
