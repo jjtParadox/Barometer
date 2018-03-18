@@ -23,4 +23,12 @@ object TestUtils {
         //TODO tick the server in a way that doesn't autosave unless requested
         Barometer.server.tick()
     }
+
+    /**
+     * @param shutdownOnEndTesting set to false to keep the server running when testing ends
+     */
+    @JvmStatic fun setShutdownOnEndTesting(shutdownOnEndTesting: Boolean) {
+        Barometer.shutdownOnEndTesting = shutdownOnEndTesting
+    }
+
 }

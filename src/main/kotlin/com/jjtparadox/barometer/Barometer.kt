@@ -53,6 +53,8 @@ class Barometer {
         @JvmField var testing = true
         @JvmField var finishedLatch = CountDownLatch(1)
 
+        @JvmField var shutdownOnEndTesting = true
+
         @JvmStatic val server by lazy { theServer } // Hack to create a lateinit val
         private lateinit var theServer: DedicatedServer
     }
@@ -114,8 +116,11 @@ class Barometer {
 
     // Clear all worlds and shut down the server
     private fun endTesting() {
-        server.worlds = null
-        server.initiateShutdown()
+        if ( shutdownOnEndTesting ) {
+            server.worlds = null
+            server.initiateShutdown()
+        } else
+            println("Tests completed.  Keeping server running... (Use Ctrl-C to stop)")
     }
 
     // Set world spawn to origin and add a loaded chunk so the world ticks without needing a player
