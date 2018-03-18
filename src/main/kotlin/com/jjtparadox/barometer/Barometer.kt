@@ -19,6 +19,7 @@
 package com.jjtparadox.barometer
 
 import com.google.common.collect.Queues
+import com.jjtparadox.barometer.commands.CommandExit
 import net.minecraft.launchwrapper.Launch
 import net.minecraft.server.dedicated.DedicatedServer
 import net.minecraft.server.dedicated.PropertyManager
@@ -51,6 +52,9 @@ class Barometer {
     companion object {
         const val MOD_ID = "barometer"
         const val VERSION = "0.0.3-1.12"
+
+        @Mod.Instance
+        var instance: Barometer? = null
 
         @JvmField val futureTaskQueue: Queue<FutureTask<*>> = Queues.newArrayDeque<FutureTask<*>>()
         @JvmField var testing = true
@@ -100,6 +104,11 @@ class Barometer {
 
     @Mod.EventHandler
     fun serverAboutToStart(event: FMLServerAboutToStartEvent) {
+    }
+
+    @Mod.EventHandler
+    fun serverStarting(event: FMLServerStartingEvent) {
+        event.registerServerCommand(CommandExit())
     }
 
     @Mod.EventHandler
