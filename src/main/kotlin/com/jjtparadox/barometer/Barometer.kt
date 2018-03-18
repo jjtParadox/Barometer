@@ -32,7 +32,9 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.event.FMLServerAboutToStartEvent
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent
+
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
@@ -122,10 +124,19 @@ class Barometer {
     // Clear all worlds and shut down the server
     private fun endTesting() {
         if ( shutdownOnEndTesting ) {
-            server.worlds = null
-            server.initiateShutdown()
-        } else
-            println("Tests completed.  Keeping server running... (Use Ctrl-C to stop)")
+            shutdown()
+        } else {
+            // Switch on the dedicated server gui so that it can be easily shut down
+            server.setGuiEnabled()
+            println("Barometer testing complete, but a request has been made to keep the server running")
+            println("Use the 'exit' command (from the Barometer mod) to stop the server without saving")
+            println("Use the 'stop' command (from minecraft) to save and stop the server")
+        }
+    }
+
+    fun shutdown() {
+        server.worlds = null
+        server.initiateShutdown()
     }
 
     // Set world spawn to origin and add a loaded chunk so the world ticks without needing a player
