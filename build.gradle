@@ -21,7 +21,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 apply plugin: 'maven-publish'
 
-version = "0.0.4-1.12"
+version = "0.0.5"
 group = "com.jjtparadox.barometer"
 archivesBaseName = "barometer"
 
@@ -168,4 +168,4 @@ bintray {
     publications = ['maven']
 }
 
-//bintrayUpload.dependsOn check
+bintrayUpload.dependsOn check

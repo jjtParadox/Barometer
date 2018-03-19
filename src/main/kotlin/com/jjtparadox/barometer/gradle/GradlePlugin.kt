@@ -18,6 +18,7 @@
  */
 package com.jjtparadox.barometer.gradle
 
+import com.jjtparadox.barometer.Barometer
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -31,7 +32,7 @@ class BarometerPlugin : Plugin<Project> {
 
         val barometerTask = project.task("barometerPrep")
         barometerTask.doLast {
-            val workingDir = mcExt.runDir + extension.testServerDir
+            val workingDir = mcExt.runDir + "/" + extension.testServerDir
 
             testTask.setWorkingDir(workingDir)
             project.mkdir(testTask.workingDir)
@@ -42,12 +43,14 @@ class BarometerPlugin : Plugin<Project> {
         }
         testTask.dependsOn(barometerTask)
 
+        project.dependencies.add("compile", "com.jjtparadox.barometer:Barometer:${Barometer.VERSION}")
+
         project.dependencies.add("testCompile", project.tasks.getByName("makeStart").outputs.files)
     }
 }
 
 open class BarometerPluginExtension {
-    var testServerDir: String = "/test"
+    var testServerDir: String = "test"
     var acceptEula = false
 
     fun acceptEula() {
