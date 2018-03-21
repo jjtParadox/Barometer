@@ -45,8 +45,8 @@ dependencies {
 
     compile "io.github.lukehutch:fast-classpath-scanner:2.18.1"
 
-    provided gradleApi()
-    provided ("net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT") {
+    compileOnly gradleApi()
+    compileOnly ("net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT") {
         exclude group: "com.google.code"
         exclude group: "com.google.guava"
         exclude group: "commons-codec"
