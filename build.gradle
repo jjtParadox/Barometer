@@ -21,7 +21,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 apply plugin: 'maven-publish'
 
-version = "0.0.5"
+version = "0.0.6"
 group = "com.jjtparadox.barometer"
 archivesBaseName = "barometer"
 
@@ -46,16 +46,7 @@ dependencies {
     compile "io.github.lukehutch:fast-classpath-scanner:2.18.1"
 
     compileOnly gradleApi()
-    compileOnly ("net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT") {
-        exclude group: "com.google.code"
-        exclude group: "com.google.guava"
-        exclude group: "commons-codec"
-        exclude group: "commons-io"
-        exclude group: "net.sf.trove4j"
-        exclude group: "org.apache.commons"
-        exclude group: "org.apache.httpcomponents"
-        exclude group: "org.apache.logging"
-    }
+    compileOnly "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
 
     testCompile "org.mockito:mockito-core:2.+"
     // you may put jars on which you depend on in ./libs
