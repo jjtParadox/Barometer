@@ -18,7 +18,6 @@
  */
 package com.jjtparadox.barometer.gradle
 
-import com.jjtparadox.barometer.Barometer
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -40,16 +39,21 @@ class BarometerPlugin : Plugin<Project> {
             if (extension.acceptEula) {
                 project.file("$workingDir/eula.txt").writeText("eula=true")
             }
+
+            if (extension.exitWhenCompleted) {
+                System.setProperty("barometer.exitWhenCompleted", true.toString())
+            }
         }
         testTask.dependsOn(barometerTask)
 
-        project.dependencies.add("compile", "com.jjtparadox.barometer:Barometer:${Barometer.VERSION}")
+//        project.dependencies.add("compile", "com.jjtparadox.barometer:Barometer:${Barometer.VERSION}")
 
         project.dependencies.add("testCompile", project.tasks.getByName("makeStart").outputs.files)
     }
 }
 
 open class BarometerPluginExtension {
+    var exitWhenCompleted = true
     var testServerDir: String = "test"
     var acceptEula = false
 

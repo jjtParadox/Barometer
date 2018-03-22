@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.1.2-5'
+    ext.kotlin_version = '1.2.10'
     repositories {
         jcenter()
         maven { url = "http://files.minecraftforge.net/maven" }
@@ -21,7 +21,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 apply plugin: 'maven-publish'
 
-version = "0.0.6"
+version = "0.0.7"
 group = "com.jjtparadox.barometer"
 archivesBaseName = "barometer"
 
@@ -78,6 +78,8 @@ test {
     mkdir workingDir
 
     file("$workingDir/eula.txt").text = "eula=true"
+
+    systemProperty "barometer.exitWhenCompleted", true
 }
 
 processResources {

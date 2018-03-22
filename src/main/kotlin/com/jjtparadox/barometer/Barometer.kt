@@ -47,7 +47,7 @@ val LOGGER: Logger = LogManager.getLogger(Barometer.MOD_ID)
 class Barometer {
     companion object {
         const val MOD_ID = "barometer"
-        const val VERSION = "0.0.6"
+        const val VERSION = "0.0.7"
 
         @JvmField val futureTaskQueue: Queue<FutureTask<*>> = Queues.newArrayDeque<FutureTask<*>>()
         @JvmField var testing = true
@@ -109,6 +109,9 @@ class Barometer {
 
     @Mod.EventHandler
     fun serverStopped(event: FMLServerStoppedEvent) {
+        if (System.getProperty("barometer.exitWhenCompleted")?.toBoolean() == true) {
+            FMLCommonHandler.instance().exitJava(0, false)
+        }
         finishedLatch.countDown()
     }
 
