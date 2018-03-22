@@ -26,6 +26,21 @@ buildscript {
 // Plugins, including 'net.minecraftforge.gradle.forge'
 // ...
 apply plugin: 'com.jjtparadox.barometer' // Must be after the Forge plugin
+
+repositories {
+    // Other repositories
+    // ...
+    maven {
+        url "https://dl.bintray.com/jjtparadox/MC"
+    }
+}
+
+dependencies {
+    // Other dependencies
+    // ...
+   testCompile 'com.jjtparadox.barometer:Barometer:+' // Use latest version above
+}
+
 ```
 
 Add the following to the end of `build.gradle`:
