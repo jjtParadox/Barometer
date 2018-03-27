@@ -19,6 +19,7 @@
 package com.jjtparadox.barometer
 
 import com.google.common.collect.Queues
+import com.jjtparadox.barometer.commands.CommandExit
 import net.minecraft.launchwrapper.Launch
 import net.minecraft.server.dedicated.DedicatedServer
 import net.minecraft.server.dedicated.PropertyManager
@@ -32,7 +33,9 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.event.FMLServerAboutToStartEvent
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent
+
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
@@ -43,15 +46,21 @@ import java.util.concurrent.FutureTask
 
 val LOGGER: Logger = LogManager.getLogger(Barometer.MOD_ID)
 
-@Mod(modid = Barometer.MOD_ID, version = Barometer.VERSION, serverSideOnly = true)
+@Mod(modid = Barometer.MOD_ID, version = Barometer.VERSION, serverSideOnly = true,
+        acceptableRemoteVersions = "*")
 class Barometer {
     companion object {
         const val MOD_ID = "barometer"
         const val VERSION = "0.0.7"
 
+        @Mod.Instance
+        var instance: Barometer? = null
+
         @JvmField val futureTaskQueue: Queue<FutureTask<*>> = Queues.newArrayDeque<FutureTask<*>>()
         @JvmField var testing = true
         @JvmField var finishedLatch = CountDownLatch(1)
+
+        @JvmField var shutdownOnEndTesting = true
 
         @JvmStatic val server by lazy { theServer } // Hack to create a lateinit val
         private lateinit var theServer: DedicatedServer
@@ -98,7 +107,16 @@ class Barometer {
     }
 
     @Mod.EventHandler
+    fun serverStarting(event: FMLServerStartingEvent) {
+        event.registerServerCommand(CommandExit())
+    }
+
+    @Mod.EventHandler
     fun serverStarted(event: FMLServerStartedEvent) {
+        // Switch off auto-save
+        val commandManager = server.getCommandManager()
+        commandManager.executeCommand(server, "save-off")
+
         while (testing) {
             synchronized(futureTaskQueue) {
                 futureTaskQueue.forEach { it.run() }
@@ -117,6 +135,18 @@ class Barometer {
 
     // Clear all worlds and shut down the server
     private fun endTesting() {
+        if ( shutdownOnEndTesting ) {
+            shutdown()
+        } else {
+            // Switch on the dedicated server gui so that it can be easily shut down
+            server.setGuiEnabled()
+            println("Barometer testing complete, but a request has been made to keep the server running")
+            println("Use the 'exit' command (from the Barometer mod) to stop the server without saving")
+            println("Use the 'stop' command (from minecraft) to save and stop the server")
+        }
+    }
+
+    fun shutdown() {
         server.worlds = null
         server.initiateShutdown()
     }

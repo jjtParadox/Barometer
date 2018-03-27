@@ -16,19 +16,28 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Barometer. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.jjtparadox.barometer
+package com.jjtparadox.barometer.commands
 
-object TestUtils {
-    @JvmStatic fun tickServer() {
-        //TODO tick the server in a way that doesn't autosave unless requested
-        Barometer.server.tick()
+import com.jjtparadox.barometer.Barometer
+import net.minecraft.command.CommandBase
+import net.minecraft.command.ICommandSender
+import net.minecraft.server.MinecraftServer
+
+/**
+ * Command for stopping the server without saving any worlds
+ */
+class CommandExit : CommandBase() {
+
+    override fun getName(): String {
+        return "exit"
     }
 
-    /**
-     * @param shutdownOnEndTesting set to false to keep the server running when testing ends
-     */
-    @JvmStatic fun setShutdownOnEndTesting(shutdownOnEndTesting: Boolean) {
-        Barometer.shutdownOnEndTesting = shutdownOnEndTesting
+    override fun getUsage(sender: ICommandSender?): String {
+        return "exit"
+    }
+
+    override fun execute(server: MinecraftServer?, sender: ICommandSender?, args: Array<out String>?) {
+        Barometer.instance?.shutdown()
     }
 
 }
